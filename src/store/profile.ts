@@ -7,10 +7,15 @@ interface ProfileState {
 }
 
 export const useProfileStore = create<ProfileState>((set) => ({
-  profile: null as Profile | null,
+  profile: JSON.parse(
+    localStorage.getItem("profile") || "null"
+  ) as Profile | null,
   setProfile: (profile) => {
-    set(() => ({
-      profile,
-    }));
+    if (profile) {
+      localStorage.setItem("profile", JSON.stringify(profile));
+    } else {
+      localStorage.removeItem("profile");
+    }
+    set({ profile });
   },
 }));

@@ -64,7 +64,7 @@ export function LoginPage() {
   }
 
   return (
-    <Card className="mx-auto max-w-sm mt-12">
+    <Card className="mx-auto max-w-sm mt-16">
       <CardHeader>
         <CardTitle className="text-2xl">Login</CardTitle>
         <CardDescription>
