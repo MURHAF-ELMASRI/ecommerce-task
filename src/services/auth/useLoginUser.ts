@@ -33,7 +33,8 @@ export function useLoginUser({
   const { toast } = useToast();
 
   const loginUserFn = async (loginData: LoginFormType) => {
-    const response = await apiClient.post("/auth/login", loginData);
+    // json-server doesn't support email as a query param
+    const response = await apiClient.get(`/profile/${loginData.email}`);
     return response.data;
   };
   return useMutation({

@@ -1,5 +1,5 @@
 export const queryKeys = {
   
-  profile: (userId: number) => ["profile", userId],
+  profile: (userId: string) => ["profile", userId],
   products: "products",
 };
