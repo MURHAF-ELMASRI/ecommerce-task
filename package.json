@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "json-server":"json-server --watch db/db.json --port 3001"
+    "json-server": "json-server --watch db/db.json --port 3001"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
@@ -24,7 +24,9 @@
     "lucide-react": "^0.456.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-error-boundary": "^4.1.2",
     "react-hook-form": "^7.53.2",
+    "react-intersection-observer": "^9.13.1",
     "react-router-dom": "^6.28.0",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
