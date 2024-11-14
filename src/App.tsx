@@ -4,17 +4,20 @@ import { RouterProvider } from "react-router-dom";
 import { ReactQueryProvider } from "./Providers/ReactQueryProvider";
 import { router } from "./router";
 import useAuth from "./services/auth/useAuth";
+import { ThemeProvider } from "./Providers/ThemeProvider";
 
 function App() {
   const methods = useForm();
   useAuth();
   return (
-    <ReactQueryProvider>
-      <FormProvider {...methods}>
-        <Toaster></Toaster>
-        <RouterProvider router={router} />
-      </FormProvider>
-    </ReactQueryProvider>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <ReactQueryProvider>
+        <FormProvider {...methods}>
+          <Toaster></Toaster>
+          <RouterProvider router={router} />
+        </FormProvider>
+      </ReactQueryProvider>
+    </ThemeProvider>
   );
 }
 
