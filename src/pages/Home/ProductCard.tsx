@@ -31,7 +31,7 @@ export default function ProductCard(props: Props) {
   return (
     <Card className="max-w-sm overflow-hidden">
       <CardHeader className="p-0">
-        <div className="relative w-full aspect-[4/3] mb-4">
+        <div className="relative w-full aspect-[4/3] mb-4 flex justify-center">
           <img src={product.thumbnail} alt={product.title} />
           <Badge variant="secondary" className="absolute top-3 right-3">
             {product.category}
