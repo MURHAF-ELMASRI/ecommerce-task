@@ -17,7 +17,6 @@ export default function Topbar() {
             </Link>
 
             <div className="flex gap-4">
-              <ModeToggle></ModeToggle>
               {!profile ? (
                 <div className="flex items-center gap-4">
                   <Button onClick={() => navigate("/auth/login")}>
@@ -34,6 +33,8 @@ export default function Topbar() {
                   <Button onClick={() => setProfile(null)}>Sign out</Button>
                 </div>
               ) : null}
+
+              <ModeToggle></ModeToggle>
             </div>
           </div>
         </div>
