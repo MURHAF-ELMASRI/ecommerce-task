@@ -11,6 +11,4 @@ export interface Profile {
   lastName: string;
   gender: "female" | "male";
   image: string;
-  accessToken: string;
-  refreshToken: string;
 }

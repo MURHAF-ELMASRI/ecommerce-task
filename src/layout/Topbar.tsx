@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/button";
+import { useProfileStore } from "@/store/profile";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Topbar() {
+  const { profile, setProfile } = useProfileStore((state) => state);
   const navigate = useNavigate();
 
   return (
@@ -13,9 +15,20 @@ export default function Topbar() {
               <span className="font-bold">E-commerce</span>
             </Link>
 
-            <div className="flex items-center gap-4">
-              <Button onClick={() => navigate("/auth/login")}>Sign in</Button>
-            </div>
+            {!profile ? (
+              <div className="flex items-center gap-4">
+                <Button onClick={() => navigate("/auth/login")}>Sign in</Button>
+              </div>
+            ) : null}
+
+            {profile ? (
+              <div className="flex items-center gap-4">
+                <p className="text-sm font-medium text-gray-900 dark:text-white">
+                  {profile.username}
+                </p>
+                <Button onClick={() => setProfile(null)}>Sign out</Button>
+              </div>
+            ) : null}
           </div>
         </div>
       </nav>
