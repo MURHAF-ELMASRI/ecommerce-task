@@ -27,7 +27,7 @@ export function useSignup({
   const apiClient = useApiClient();
 
   const signupFn = async (newUser: SignupFormType) => {
-    const response = await apiClient.post("/auth/register", newUser);
+    const response = await apiClient.post("/profile", newUser);
     return response.data;
   };
 
