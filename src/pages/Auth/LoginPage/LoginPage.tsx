@@ -8,37 +8,59 @@ import {
 } from "@/components/ui/card";
 import { Form } from "@/components/ui/form/form";
 import { TextField } from "@/components/ui/form/inputs/TextField";
-import { useUser } from "@/services/auth/useUser";
+import { useToast } from "@/hooks/use-toast";
+import { useToggle } from "@/hooks/util/useToggle";
+import {
+  LoginFormType,
+  loginSchema,
+  useLoginUser,
+} from "@/services/auth/useLoginUser";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import { z } from "zod";
-
-const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6, {
-    message: "Password must be at least 6 character",
-  }),
-});
-
-type FormValues = z.infer<typeof loginSchema>;
+import { Link, useNavigate } from "react-router-dom";
 
 export function LoginPage() {
-  const {} =useUser()
-  const formMethods = useForm<FormValues>({
+  const { toast } = useToast();
+  const navigate = useNavigate();
+  const [showPassword, toggleShowPassword] = useToggle();
+
+  const formMethods = useForm<LoginFormType>({
     resolver: zodResolver(loginSchema),
-    mode: "onChange",
+    mode: "onBlur",
   });
 
   const {
     register,
     formState: { isSubmitting, errors },
+    setError,
   } = formMethods;
 
-  function onSubmit(data: FormValues) {
-    console.log(data);
+  const loginUser = useLoginUser({
+    onSuccess() {
+      toast({
+        title: "Success",
+        description: "You are now logged in",
+      });
+      navigate("/", { replace: true });
+    },
+    onError: (error) => {
+      //TODO refactor this to be global
+      if (error.response?.data?.fieldErrors) {
+        for (const [field, message] of Object.entries(
+          error.response.data.fieldErrors
+        )) {
+          setError(field as keyof LoginFormType, {
+            type: "server",
+            message,
+          });
+        }
+      }
+    },
+  });
 
-    alert("You submitted the following values:");
+  function onSubmit(data: LoginFormType) {
+    loginUser.mutate(data);
   }
 
   return (
@@ -50,12 +72,7 @@ export function LoginPage() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Form
-          form={formMethods}
-          handleSubmit={() => {
-            console.log("submit");
-          }}
-        >
+        <Form form={formMethods} handleSubmit={onSubmit}>
           <div className="grid gap-4">
             {/* Email */}
             <TextField
@@ -69,21 +86,28 @@ export function LoginPage() {
               {...register("password")}
               label="Password"
               required
+              type={showPassword ? "text" : "password"}
+              onIconClick={toggleShowPassword}
+              icon={
+                showPassword ? (
+                  <EyeOff className="h-4 w-4" aria-hidden="true" />
+                ) : (
+                  <Eye className="h-4 w-4" aria-hidden="true" />
+                )
+              }
             ></TextField>
 
             <Button
               disabled={isSubmitting && !!errors.email && !!errors.password}
               type="submit"
               className="w-full"
+              loading={loginUser.isPending}
             >
               Login
             </Button>
           </div>
         </Form>
 
-        <Button variant="outline" className="w-full mt-4">
-          Login with Google
-        </Button>
         <div className="mt-4 text-center text-sm">
           Don&apos;t have an account?{" "}
           <Link to="/auth/register" className="underline">
