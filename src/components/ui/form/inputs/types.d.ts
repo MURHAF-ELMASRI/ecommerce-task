@@ -26,4 +26,5 @@ export type TextFieldProps = {
 
 export type InputProps = JSX.IntrinsicElements["input"] & {
   isFullWidth?: boolean;
+  name: string;
 };
