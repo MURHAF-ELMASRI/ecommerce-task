@@ -110,8 +110,8 @@ export function LoginPage() {
 
         <div className="mt-4 text-center text-sm">
           Don&apos;t have an account?{" "}
-          <Link to="/auth/register" className="underline">
-            Login
+          <Link to="/auth/signup" className="underline">
+            Signup
           </Link>
         </div>
       </CardContent>

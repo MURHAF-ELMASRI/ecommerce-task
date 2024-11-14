@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form/form";
+import { SelectField } from "@/components/ui/form/inputs/SelectField";
 import { TextField } from "@/components/ui/form/inputs/TextField";
 import { useToast } from "@/hooks/use-toast";
 import { useToggle } from "@/hooks/util/useToggle";
@@ -12,6 +13,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+
+type GenderOptionType = { value: SignupFormType["gender"]; label: string }[];
 
 export function SignupPage() {
   const { toast } = useToast();
@@ -48,6 +51,11 @@ export function SignupPage() {
     },
   });
 
+  const genderOptions: GenderOptionType = [
+    { value: "male", label: "Male" },
+    { value: "female", label: "Female" },
+  ];
+
   function onSubmit(data: SignupFormType) {
     signupUser.mutate(data);
   }
@@ -68,33 +76,37 @@ export function SignupPage() {
           E-commerce
         </div>
       </div>
-      <div className="lg:p-8">
+      <div className="p-6 lg:p-8">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <div className="flex flex-col space-y-2 text-center">
             <h1 className="text-2xl font-semibold tracking-tight">
               Create an account
             </h1>
             <p className="text-sm text-muted-foreground">
-              Enter your email below to create your account
+              Enter your information below to create your account
             </p>
           </div>
           <div className="grid gap-6">
             <Form form={formMethods} handleSubmit={onSubmit}>
-              <div className="grid gap-2">
+              <div className="grid gap-4">
                 <TextField
                   {...register("email")}
                   label="Email"
                   required
                 ></TextField>
-                <TextField
-                  {...register("firstName")}
-                  label="First Name"
-                  required
-                ></TextField>
-                <TextField
-                  {...register("lastName")}
-                  label="LastName"
-                ></TextField>
+
+                <div className="flex gap-2">
+                  <TextField
+                    {...register("firstName")}
+                    label="First Name"
+                    required
+                  ></TextField>
+                  <TextField
+                    {...register("lastName")}
+                    label="LastName"
+                  ></TextField>
+                </div>
+
                 <TextField
                   {...register("password")}
                   label="Password"
@@ -110,7 +122,13 @@ export function SignupPage() {
                   }
                 ></TextField>
 
-                <TextField {...register("gender")} label="Gender"></TextField>
+                <SelectField
+                  {...register("gender")}
+                  label="Gender"
+                  options={genderOptions}
+                  placeholder="Select Gender"
+                  required
+                ></SelectField>
 
                 <Button loading={signupUser.isPending}>Signup</Button>
               </div>

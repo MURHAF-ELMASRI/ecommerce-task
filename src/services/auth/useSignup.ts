@@ -8,8 +8,8 @@ export const signupSchema = z.object({
   password: z.string().min(6),
   email: z.string().email(),
   firstName: z.string().min(3),
-  lastName: z.string().min(3),
-  gender: z.enum(["Male", "Female"]),
+  lastName: z.string().optional(),
+  gender: z.enum(["male", "female"]),
 });
 
 export type SignupFormType = z.infer<typeof signupSchema>;
