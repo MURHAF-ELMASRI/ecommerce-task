@@ -1,13 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { apiClient } from "../apiClient";
+ 
 import { queryKeys } from "../queryKeys";
+import { useApiClient } from "../apiClient";
 
-export function useUser() {
+export function useGetProfile() {
   const { id } = useParams();
+  const apiClient = useApiClient();
 
   const getUserFn = async () => {
-    const response = await apiClient.get(`/profile/${id}`);
+    const response = await apiClient.get(`/auth/me`);
     return response.data;
   };
 

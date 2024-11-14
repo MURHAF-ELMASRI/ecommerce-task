@@ -3,11 +3,14 @@ export interface Product {
   name: string;
   price: number;
 }
-
-export interface User {
+export interface Profile {
   id: number;
-  first_name: string;
-  last_name: string;
+  username: string;
   email: string;
-  password: string;
+  firstName: string;
+  lastName: string;
+  gender: "female" | "male";
+  image: string;
+  accessToken: string;
+  refreshToken: string;
 }
