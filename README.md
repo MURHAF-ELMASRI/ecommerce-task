@@ -41,3 +41,8 @@ This task is to create a simple e-commerce website using React.
 ## Constraints
 
 - server json does not allow AND statement. So I couldn't fetch multiple brands or categories.
+
+## Future work
+- Sorting product by price
+- Sorting product by rating
+- Displaying product according to user preference
