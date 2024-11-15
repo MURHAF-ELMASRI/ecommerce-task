@@ -3,6 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { z } from "zod";
 import { useApiClient } from "../apiClient";
+import { useProfileStore } from "@/store/profile";
 
 export const signupSchema = z.object({
   password: z.string().min(6),
@@ -25,6 +26,7 @@ export function useSignup({
   onError: (data: AxiosError<SignUpErrorResponse>) => void;
 }) {
   const apiClient = useApiClient();
+  const setProfile = useProfileStore((state) => state.setProfile);
 
   const signupFn = async (newUser: SignupFormType) => {
     const response = await apiClient.post("/profile", {
@@ -37,6 +39,7 @@ export function useSignup({
   return useMutation({
     mutationFn: signupFn,
     onSuccess: (data) => {
+      setProfile(data);
       onSuccess(data);
     },
     onError: (data) => {
