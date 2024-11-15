@@ -1,20 +1,43 @@
 # E-commerce task
+
 ### Task description
 This task is to create a simple e-commerce website using React.
 
+# keynotes
+## Tools
+- React Query
+- React Router
+- zod
+- zustand
 
-### design choices
+## Components library
+- shadcn ui
+- Signup
 
-- project structure
-  - components
-    this folder contains all the components that are used in the project. I created a separate inputs folder to allow adding new input components in the future such as ( datePicker, timePicker, etc ).
-  - pages
-    this folder contains all the pages of the project. Each page is a self-contained module that can be reused throughout the project.
-  - services
-    this folder contains all the services that are used in the project. Each service is a self-contained module that can be reused throughout the project.
-  - types
-    this folder contains all the types that are used in the project. Each type is a self-contained module that can be reused throughout the project.
-- styling
-- routing
-- state management
+## Notes
+- I have combined the react query and react router hooks with shadcn ui. and make reusable components. such as TextField, SelectField. this will allow me to reuse the components in other pages without having to write form logic again.
+- Email is used as access key for the profile. generally this should be token from server.
+- User will keep logged in even if they close the browser.
 
+## Features
+
+### Signup
+
+### Login
+
+### Home page
+- Filtering logic
+  User can filter by category, brand, price range.
+  when user selects a category, the query will be invalidated and the products will be fetched again.
+
+## Error handling
+
+- First Step: Using Zod to check for user input.
+- Second Step: If there is an error related to field I pollute the form with the error message. for example when user enters already existing email, I will show the error message.
+- Third Step: For general errors there Is toast message set by react-form. for example when server return 500.
+
+- In Product listing page, I there is error if server does not respond allowing the user to retry the request.
+
+## Constraints
+
+- server json does not allow AND statement. So I couldn't fetch multiple brands or categories.
