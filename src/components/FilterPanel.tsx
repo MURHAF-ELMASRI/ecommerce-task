@@ -6,11 +6,11 @@ import { Separator } from "./ui/separator";
 interface FilterPanelProps {
   categories?: string[];
   brands?: string[];
-  selectedCategory: string;
-  selectedBrand: string;
+  selectedCategory: string | null;
+  selectedBrand: string | null;
   priceRange: [number, number];
-  onCategoryChange: (category: string) => void;
-  onBrandChange: (brand: string) => void;
+  onCategoryChange: (category: string | null) => void;
+  onBrandChange: (brand: string | null) => void;
   onPriceRangeChange: (range: [number, number]) => void;
 }
 
@@ -35,7 +35,9 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
               <label key={category} className="flex items-center space-x-2">
                 <Checkbox
                   checked={selectedCategory === category}
-                  onCheckedChange={() => onCategoryChange(category)}
+                  onCheckedChange={(value) =>
+                    onCategoryChange(value ? category : null)
+                  }
                 />
                 <span>{category}</span>
               </label>
@@ -50,11 +52,13 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
         <div className="mt-4 grid gap-2">
           <h4 className="text-sm">Brand</h4>
           <div className="space-y-2">
-            {brands.map((brand) => (
-              <label key={brand} className="flex items-center space-x-2">
+            {brands.map((brand, index) => (
+              <label key={index} className="flex items-center space-x-2">
                 <Checkbox
                   checked={selectedBrand === brand}
-                  onCheckedChange={() => onBrandChange(brand)}
+                  onCheckedChange={(value) =>
+                    onBrandChange(value ? brand : null)
+                  }
                 />
                 <span>{brand}</span>
               </label>

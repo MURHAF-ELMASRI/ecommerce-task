@@ -1,6 +1,5 @@
 import { Product } from "@/types";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useSearchParams } from "react-router-dom";
 import { useApiClient } from "../apiClient";
 import { queryKeys } from "../queryKeys";
 
@@ -13,14 +12,22 @@ type PaginationResponse = {
 };
 
 export function useInfiniteProducts({ pageLimit }: { pageLimit: number }) {
-  const [searchParams] = useSearchParams();
   const apiClient = useApiClient();
 
   const getInfiniteProductsFn = async ({ pageParam = 1 }) => {
+    const { maxPrice, minPrice, ...restParams } = Object.fromEntries(
+      new URLSearchParams(window.location.search).entries()
+    );
+    const filteringParams = {
+      price_gte: minPrice,
+      price_lte: maxPrice,
+      ...restParams,
+    };
+
     const params = {
       _page: pageParam,
       _per_page: pageLimit,
-      ...Object.fromEntries(searchParams.entries()),
+      ...filteringParams,
     };
 
     return apiClient
