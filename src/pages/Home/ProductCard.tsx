@@ -29,7 +29,7 @@ export default function ProductCard(props: Props) {
   const inStock = product.availabilityStatus === "In Stock";
 
   return (
-    <Card className="max-w-sm overflow-hidden">
+    <Card className="max-w-sm overflow-hidden w-full">
       <CardHeader className="p-0">
         <div className="relative w-full aspect-[4/3] mb-4 flex justify-center">
           <img src={product.thumbnail} alt={product.title} />
@@ -57,7 +57,6 @@ export default function ProductCard(props: Props) {
             </span>
           </div>
         </div>
-        <p className="text-gray-600 mb-4">{product.description}</p>
         <div className="flex justify-between items-center mb-4">
           <span className="text-3xl font-bold">
             ${product.price.toFixed(2)}
@@ -79,7 +78,7 @@ export default function ProductCard(props: Props) {
           </Button>
         </div>
       </CardContent>
-      <CardFooter className="flex justify-between">
+      <CardFooter className="flex justify-between flex-wrap">
         <Button variant="outline">
           <Heart className="mr-2 h-4 w-4" /> Add to Wishlist
         </Button>
