@@ -4,8 +4,8 @@ import React from "react";
 import { Separator } from "./ui/separator";
 
 interface FilterPanelProps {
-  categories: string[];
-  brands: string[];
+  categories?: string[];
+  brands?: string[];
   selectedCategory: string;
   selectedBrand: string;
   priceRange: [number, number];
@@ -27,37 +27,41 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
   return (
     <aside className="w-64 p-4  border-r">
       {/* Category Filter */}
-      <div className="mt-4 grid gap-2">
-        <h4 className="text-sm">Category</h4>
-        <div className="space-y-2">
-          {categories.map((category) => (
-            <label key={category} className="flex items-center space-x-2">
-              <Checkbox
-                checked={selectedCategory === category}
-                onCheckedChange={() => onCategoryChange(category)}
-              />
-              <span>{category}</span>
-            </label>
-          ))}
+      {categories && (
+        <div className="mt-4 grid gap-2">
+          <h4 className="text-sm">Category</h4>
+          <div className="space-y-2">
+            {categories.map((category) => (
+              <label key={category} className="flex items-center space-x-2">
+                <Checkbox
+                  checked={selectedCategory === category}
+                  onCheckedChange={() => onCategoryChange(category)}
+                />
+                <span>{category}</span>
+              </label>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
       <Separator className="my-4" />
 
       {/* Brand Filter */}
-      <div className="mt-4 grid gap-2">
-        <h4 className="text-sm">Brand</h4>
-        <div className="space-y-2">
-          {brands.map((brand) => (
-            <label key={brand} className="flex items-center space-x-2">
-              <Checkbox
-                checked={selectedBrand === brand}
-                onCheckedChange={() => onBrandChange(brand)}
-              />
-              <span>{brand}</span>
-            </label>
-          ))}
+      {brands && (
+        <div className="mt-4 grid gap-2">
+          <h4 className="text-sm">Brand</h4>
+          <div className="space-y-2">
+            {brands.map((brand) => (
+              <label key={brand} className="flex items-center space-x-2">
+                <Checkbox
+                  checked={selectedBrand === brand}
+                  onCheckedChange={() => onBrandChange(brand)}
+                />
+                <span>{brand}</span>
+              </label>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
       <Separator className="my-4" />
 
       {/* Price Range Filter */}
